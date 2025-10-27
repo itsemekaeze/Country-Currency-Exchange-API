@@ -51,7 +51,7 @@ Create a `.env` file in the root directory:
 ```env
 COUNTRIES_RESPONSE=
 EXCHANGE_RESPONSE=
-DATABASE_URL=postgresql://user:password@localhost/dbname
+DATABASE_URL=
 ```
 
 5. Run database migrations:
