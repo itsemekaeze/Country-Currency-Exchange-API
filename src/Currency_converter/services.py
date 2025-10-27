@@ -239,38 +239,21 @@ def bulk_refresh_countries(db: Session):
                 estimated_gdp = (population * randrange(1000, 2000)) / exchange_rate if exchange_rate > 0 else 0
             
             
-            existing = db.query(CurrencyExchanger).filter(
-                func.lower(CurrencyExchanger.name) == country_name.lower()
-            ).first()
+                          
+            new_country = CurrencyExchanger(
+                name=country_name,
+                capital=country.get('capital', 'N/A'),
+                region=country.get('region', 'Unknown'),
+                population=population,
+                currency_code=currency_code,
+                exchange_rate=exchange_rate,
+                estimated_gdp=estimated_gdp,
+                flag_url=country.get('flag', ''),
+                last_refreshed_at=refresh_timestamp,
+            )
             
-            if existing:
-                
-                existing.capital = country.get('capital', 'N/A')
-                existing.region = country.get('region', 'Unknown')
-                existing.population = population
-                existing.currency_code = currency_code
-                existing.exchange_rate = exchange_rate
-                existing.estimated_gdp = estimated_gdp
-                existing.flag_url = country.get('flag', '')
-                existing.last_refreshed_at = refresh_timestamp
-                
-                updated_countries.append(country_name)
-            else:
-                
-                new_country = CurrencyExchanger(
-                    name=country_name,
-                    capital=country.get('capital', 'N/A'),
-                    region=country.get('region', 'Unknown'),
-                    population=population,
-                    currency_code=currency_code,
-                    exchange_rate=exchange_rate,
-                    estimated_gdp=estimated_gdp,
-                    flag_url=country.get('flag', ''),
-                    last_refreshed_at=refresh_timestamp,
-                )
-                
-                db.add(new_country)
-                created_countries.append(country_name)
+            db.add(new_country)
+            created_countries.append(country_name)
             
         except Exception as e:
             print(f"Error processing country {country.get('name', 'Unknown')}: {e}")
