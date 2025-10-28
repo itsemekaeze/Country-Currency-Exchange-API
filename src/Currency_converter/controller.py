@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, Depends, Query, Response, HTTPException
-from .models import CreateCountryRequest, CreateCountryResponse, CountrieStatus
+from .models import CreateCountryResponse, CountrieStatus
 from src.database.core import get_db
 from sqlalchemy.orm import Session
 from .services import get_all_country, get_country_by_name, delete_country_by_name, check_country_status, get_summary_image_path, bulk_refresh_countries
