@@ -162,7 +162,7 @@ def bulk_refresh_countries(db: Session):
             
             currency_code = None
             exchange_rate = None
-            estimated_gdp = 0
+            estimated_gdp = 0.0
             
             
             if 'currencies' in country and country['currencies'] and len(country['currencies']) > 0:
@@ -178,13 +178,13 @@ def bulk_refresh_countries(db: Session):
                     else:
                         
                         exchange_rate = None
-                        estimated_gdp = None
+                        estimated_gdp = 0.0
             
             
             if not currency_code:
                 currency_code = None
                 exchange_rate = None
-                estimated_gdp = 0
+                estimated_gdp = 0.0
             
             
             existing = db.query(CurrencyExchanger).filter(
@@ -253,10 +253,11 @@ def generate_summary_image(db: Session, refresh_timestamp: datetime):
         print("PIL/Pillow not installed. Run: pip install Pillow")
         return
     
-    # Get statistics
+    
+
     total_countries = db.query(CurrencyExchanger).count()
     
-    # Get top 5 countries by GDP
+    
     top_5 = db.query(CurrencyExchanger).filter(
         CurrencyExchanger.estimated_gdp.isnot(None)
     ).order_by(desc(CurrencyExchanger.estimated_gdp)).limit(5).all()

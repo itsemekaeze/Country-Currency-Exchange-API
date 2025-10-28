@@ -14,6 +14,6 @@ class CurrencyExchanger(Base):
     population = Column(Integer, nullable=False)
     currency_code = Column(String, nullable=True)
     exchange_rate = Column(Float, nullable=True)
-    estimated_gdp = Column(Float, nullable=False)
-    flag_url  = Column(String)
+    estimated_gdp = Column(Float, nullable=False, default=0.0)
+    flag_url = Column(String, nullable=True)
     last_refreshed_at = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
