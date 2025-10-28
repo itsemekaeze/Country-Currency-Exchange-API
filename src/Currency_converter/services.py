@@ -1,7 +1,6 @@
 import requests
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from .models import CreateCountryRequest
 from src.entities.currency_exchanger import CurrencyExchanger
 from datetime import datetime, timezone
 from random import randrange
